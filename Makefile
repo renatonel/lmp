@@ -1,5 +1,20 @@
 # clang -o <output> -I<inc-dir> srcfiles.c
 
+# To make executable
+# $ make
+#
+# To cleanup old builds
+# $ make clean
+#
+# To create new header file
+# 	make new_header name=filename
+#
+# To create new implementation file
+# 	make new_impl name=filename
+#
+# To create both new header and implementation file
+# 	make new_header new_impl name=filename
+
 HEADER_CONTENT="\
 /** $(name).h\n\
  * \n\
@@ -35,7 +50,7 @@ out_dir: # Output directory structure
 # create new include file
 # usage:
 # 	make new_header name=filename
-# 	make new header new_impl name=filename
+# 	make new_header new_impl name=filename
 new_header: 
 	mkdir -p src/headers
 	echo $(HEADER_CONTENT) > src/headers/$(name).h
@@ -43,7 +58,7 @@ new_header:
 # create new implementation file
 # usage:
 # 	make new_impl name=filename
-# 	make new header new_impl name=filename
+# 	make new_header new_impl name=filename
 new_impl: 
 	mkdir -p src
 	echo $(IMPL_CONTENT) > src/$(name).c
