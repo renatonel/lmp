@@ -41,6 +41,10 @@ int $(name)() {\n\
 lmp: src/main.c out_dir
 	clang -o bin/lmp src/main.c
 
+test: lmp
+	cp doc/myTestLiterateProgram.lmp bin/
+	cd bin; ./lmp myTestLiterateProgram.lmp
+
 clean:
 	rm -Rf bin
 
