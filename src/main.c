@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "headers/debug_logging.h"
+#include <debug_logging.h>
 
 //Program states
 #define START       0x2100
@@ -15,6 +15,7 @@
 // Errors
 #define FILE_NOT_FOUND 0x1001
 
+/*
 struct tangle_yarn {
     char* name;
     char* content;
@@ -33,7 +34,7 @@ struct tangle_ball new_tangle_ball() {
 
 
 int add_tangle_yarn();
-
+*/
 int tangle(char* file_name) {
     FILE* f = fopen(file_name, "r");
     if (f == NULL) {

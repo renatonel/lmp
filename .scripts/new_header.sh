@@ -33,6 +33,6 @@ int ${NAME}();
 END
 )
 
-mkdir "$LOCATION"
+mkdir -p "$LOCATION"
 echo "${HEADER_CONTENT}" > ${LOCATION}/${NAME}.h
 
