@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include <debug_logging.h>
+#include <linked_list.h>
 
 //Program states
 #define START       0x2100
@@ -15,26 +16,6 @@
 // Errors
 #define FILE_NOT_FOUND 0x1001
 
-/*
-struct tangle_yarn {
-    char* name;
-    char* content;
-
-    struct tangle_yarn* next_yarn;
-}
-
-struct tangle_ball {
-    struct tangle_yarn* first_yarn;
-};
-
-struct tangle_ball new_tangle_ball() {
-    return NULL;
-}
-
-
-
-int add_tangle_yarn();
-*/
 int tangle(char* file_name) {
     FILE* f = fopen(file_name, "r");
     if (f == NULL) {
