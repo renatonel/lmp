@@ -7,6 +7,7 @@
 
 // Error codes
 #define LL_SUCCESS          0x0000
+#define LL_NOT_YET_IMPL     0x20FE
 #define LL_UNKNOWN_ERROR    0x20FF
 
 struct node {
