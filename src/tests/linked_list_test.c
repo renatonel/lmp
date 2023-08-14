@@ -1,9 +1,17 @@
 
 //#define NDEBUG // Disable assert
+#define TEST_OUTPUT
 
 #include <linked_list.h>
 #include <assert.h>
 #include <stdio.h>
+
+#ifdef TEST_OUTPUT
+#define print_test(name, description) \
+    printf("\n" name "\n" description "\n")
+#else
+#define print_test(name, description) __no_op__
+#endif // TEST_OUTPUT
 
 #define PASS 1
 #define FAIL 0
@@ -12,18 +20,22 @@ typedef int test;
 typedef int bool;
 
 test test_linked_list_init() {
-    printf("\ntest_linked_list_init\n"
-           "To test that linked list initialization works\n");
+    print_test("test_linked_list_init",
+           "To test that linked list initialization works");
 
     struct linked_list list;
 
+    // Check that initialize method returns success
     bool init_check = linked_list_init(&list) == LL_SUCCESS;
+
+    // Check that members have correct values
     bool size_check = list.size == 0;
     bool current_pos_check = list.current_pos == LL_STATUS_EMPTY;
     bool first_node_check = list.first_node == NULL;
     bool current_node_check = list.current_node == NULL;
     bool last_node_check = list.last_node == NULL;
 
+    // Assertions to aid with debugging
     assert(init_check);
     assert(size_check);
     assert(current_pos_check);
@@ -37,27 +49,54 @@ test test_linked_list_init() {
         && first_node_check
         && current_node_check
         && last_node_check
-        ? PASS 
-        : FAIL;
+        ?  PASS 
+        :  FAIL;
 }
 
 test test_linked_list_add() {
-    printf("\ntest_linked_list_add\n"
-           "To test adding to a linked list\n");
+    print_test("test_linked_list_add",
+           "To test adding to a linked list");
 
-    struct node node;
     struct linked_list list;
+    int content = 98;
 
-    //assert(append_linked_list(&list, &node) == LL_SUCCESS);
-    //assert();
+    if (linked_list_init(&list) != LL_SUCCESS) {
+        return FAIL;
+    }
 
-    return PASS;
+    bool add_first_check = 
+        linked_list_add(&list, &content, 0) == LL_SUCCESS;
+    
+    bool size_1_check = list.size == 1;
+    bool pos_1_check = list.current_pos == 0;
+    bool first_node_1_check = (int)(list.first_node->content) == 98;
+    bool curr_node_1_check = list.current_node->content == 98;
+    bool last_node_1_check = list.last_node->content == 98;
+    //list->first_node == list->current_node == list->last_node;
+
+    assert(add_first_check);
+    assert(size_1_check);
+    assert(pos_1_check);
+    assert(first_node_1_check);
+    assert(curr_node_1_check);
+    assert(last_node_1_check);
+
+    bool first_check = add_first_check
+         && size_1_check
+         && pos_1_check
+         && first_node_1_check
+         && curr_node_1_check
+         && last_node_1_check;
+
+    return first_check
+        ?  PASS
+        :  FAIL;
 }
 
 int main() {
     test (*tests[])() = {
-        &test_linked_list_init
-        //,&test_linked_list_add
+         &test_linked_list_init
+        ,&test_linked_list_add
     };
 
     int test_count = sizeof(tests) / (8); // size of 64bit address ??

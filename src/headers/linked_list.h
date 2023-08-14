@@ -7,6 +7,7 @@
 
 // Return and Error codes
 #define LL_SUCCESS          0x0000
+#define LL_CORRUPTION       0x2001
 #define LL_NOT_YET_IMPL     0x20FE
 #define LL_ERROR_UNKNOWN    0x20FF
 
@@ -45,11 +46,36 @@ struct linked_list {
 
 int linked_list_init(struct linked_list* linked_list);
 
-int linked_list_add(struct linked_list* linked_list, struct node* node, int position);
+/** Add an element to the list.
+ *  On success, the current node and position is set to the
+ *  newly inserted node.
+ *
+ *  @linked_list    list to be added to
+ *  @content        The content to add to the list
+ *  @position       The position of the new element. If the position
+ *                  is specified as after the last element, it will
+ *                  be placed as the last element instead.
+ *  @returns        Result of add operation
+ **/
+int linked_list_add(
+        struct linked_list* linked_list, 
+        void* content, 
+        int position);
 
-int linked_list_remove(struct linked_list* linked_list, struct node* node);
+int linked_list_remove(
+        struct linked_list* linked_list, 
+        int position);
 
-struct node* linked_list_next_node(struct linked_list* linked_list);
+/** Moves the current node to the next.
+ *
+ *  @returns the content of the new current node.
+ **/
+void* linked_list_next_node(struct linked_list* linked_list);
+
+/** Resets the current node to the first node.
+ *
+ **/
+int linked_list_reset(struct linked_list* linked_list);
 
 /* optional
 struct node* linked_list_current_node(struct linked_list* linked_list);

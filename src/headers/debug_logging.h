@@ -2,17 +2,26 @@
  * 
  **/
 
-#ifndef __debug_logging_H__
-#define __debug_logging_H__
+#ifndef __DEBUG_LOGGING_H__
+#define __DEBUG_LOGGING_H__
  
-#ifdef __DEBUG__
+#ifdef LOG_DEBUG
 #include <stdio.h>
-#define DBG_MSG(string)         printf("DEBUG: %s\n", string);
-#define DBG_VAL(val, format)    printf("DEBUG: %s = "format"\n", #val, val);
+#define dbg_msg(string)         printf("DEBUG: %s\n", string);
+#define dbg_val(val, format)    printf("DEBUG: %s = "format"\n", #val, val);
 #else
-#define DBG_MSG(string)         __no_op__
-#define DBG_VAL(val, format)    __no_op__
+#define dbg_msg(string)         __no_op__
+#define dbg_val(val, format)    __no_op__
 #endif
  
-#endif // __debug_logging_H__
+#ifdef LOG_INFO
+#include <stdio.h>
+#define info_msg(string)         printf("INFO: %s\n", string);
+#define info_val(val, format)    printf("INFO: %s = "format"\n", #val, val);
+#else
+#define info_msg(string)         __no_op__
+#define info_val(val, format)    __no_op__
+#endif
+ 
+#endif // __DEBUG_LOGGING_H__
 
