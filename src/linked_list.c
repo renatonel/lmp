@@ -4,6 +4,7 @@
 
 #include <debug_logging.h>
 #include <linked_list.h>
+#include <stdio.h>
 
 int linked_list_init(struct linked_list* linked_list) {
     return LL_NOT_YET_IMPL;
@@ -18,5 +19,5 @@ int linked_list_remove(struct linked_list* linked_list, struct node* node) {
 }
 
 struct node* linked_list_next_node(struct linked_list* linked_list) {
-    return LL_NOT_YET_IMPL;
+    return NULL;
 }

@@ -52,5 +52,6 @@ Mkfile.old
 dkms.conf
 
 # Binary output
-bin/
-
+build/
+vim/
+**/*.vim
