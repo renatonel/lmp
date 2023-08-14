@@ -7,7 +7,13 @@
 #include <stdio.h>
 
 int linked_list_init(struct linked_list* linked_list) {
-    return LL_NOT_YET_IMPL;
+    linked_list->size = 0;
+    linked_list->current_pos = LL_STATUS_EMPTY;
+    linked_list->first_node = NULL;
+    linked_list->current_node = NULL;
+    linked_list->last_node = NULL;
+    
+    return LL_SUCCESS;
 }
 
 int linked_list_add(struct linked_list* linked_list, struct node* node, int position) {

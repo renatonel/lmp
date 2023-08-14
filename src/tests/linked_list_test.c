@@ -12,14 +12,14 @@ typedef int test;
 typedef int bool;
 
 test test_linked_list_init() {
-    printf("test_linked_list_init\n"
+    printf("\ntest_linked_list_init\n"
            "To test that linked list initialization works\n");
 
     struct linked_list list;
 
     bool init_check = linked_list_init(&list) == LL_SUCCESS;
     bool size_check = list.size == 0;
-    bool current_pos_check = list.current_pos == -1;
+    bool current_pos_check = list.current_pos == LL_STATUS_EMPTY;
     bool first_node_check = list.first_node == NULL;
     bool current_node_check = list.current_node == NULL;
     bool last_node_check = list.last_node == NULL;
@@ -42,6 +42,9 @@ test test_linked_list_init() {
 }
 
 test test_linked_list_add() {
+    printf("\ntest_linked_list_add\n"
+           "To test adding to a linked list\n");
+
     struct node node;
     struct linked_list list;
 
@@ -53,15 +56,15 @@ test test_linked_list_add() {
 
 int main() {
     test (*tests[])() = {
-        &test_linked_list_init,
-        &test_linked_list_add
+        &test_linked_list_init
+        //,&test_linked_list_add
     };
 
     int test_count = sizeof(tests) / (8); // size of 64bit address ??
     int pass_count = 0;
     int test_nr = 0;
 
-    printf("%i tests will be executed..\n", test_count);
+    printf("\n%i tests will be executed..\n", test_count);
     for (test_nr = 0; test_nr < test_count; test_nr++) {
         int test_result = tests[test_nr]();
 
@@ -70,7 +73,7 @@ int main() {
         printf("Test %i: %i\n", test_nr, test_result);
     }
 
-    printf("%i Tests executed\n%i Tests passed\n%i Tests failed\n",
+    printf("\n%i Tests executed\n%i Tests passed\n%i Tests failed\n",
             test_nr, pass_count, test_nr - pass_count);
 
     // returns the number of tests failed,

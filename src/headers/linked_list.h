@@ -5,23 +5,42 @@
 #ifndef __LINKED_LIST_H__
 #define __LINKED_LIST_H__
 
-// Error codes
+// Return and Error codes
 #define LL_SUCCESS          0x0000
 #define LL_NOT_YET_IMPL     0x20FE
-#define LL_UNKNOWN_ERROR    0x20FF
+#define LL_ERROR_UNKNOWN    0x20FF
+
+// Status codes
+#define LL_STATUS_EMPTY         -1      ///< list is empty
+#define LL_STATUS_INCONSISTENT  -99     ///< list is in inconsistent status
 
 struct node {
     void* content;
     struct node* next_node;
 };
 
+/** A Linked List
+ *  
+ **/
 struct linked_list {
+    /** The number of nodes currently in the list.
+     *  0 if list is empty.
+     **/
     int size;
+
+    /** The position of the current node.
+     *  LL_STATUS_EMPTY (-1) if list is empty.
+     *  0 for first element.
+     *  LL_STATUS_INCONSISTENT if an inconsistent state is detected.
+     **/
     int current_pos;
 
-    struct node* first_node;
-    struct node* current_node;
-    struct node* last_node;
+    /** Pointers to nodes of insterest.
+     *  If list is empty, these pointers will be NULL.
+     **/
+    struct node* first_node;    ///< Pointer to the first node in the list.
+    struct node* current_node;  ///< Pointer to the current node.
+    struct node* last_node;     ///< Pointer to the last node in the list.
 };
 
 int linked_list_init(struct linked_list* linked_list);
