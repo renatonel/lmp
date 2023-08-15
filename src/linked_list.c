@@ -104,57 +104,6 @@ int linked_list_add(
 
         return LL_INVALID_ARGS;
     }
-
-//    {
-//        linked_list_reset(linked_list);
-//        for (int i = 0; i < position; i++) {
-//            // traverse the list until position-1
-//            linked_list_next(linked_list);
-//        }
-//    
-//        dbg_msg("list is now reset");
-//
-//        // save position-1 into tmp var
-//        if (linked_list->current_pos == position - 1) {
-//            dbg_msg("Assigning previous node");
-//            prev_node = linked_list->current_node;
-//            
-//            // go forward 1 and save position into tmp var
-//            linked_list_next(linked_list);
-//            if (linked_list->current_pos == position) {
-//                dbg_msg("Assigning next node");
-//                next_node = linked_list->current_node;
-//            } else {
-//                error_msg("Linked List in an inconsistent state");
-//                dbg_val(linked_list->current_pos, "%i");
-//    
-//                linked_list->current_pos = LL_STATUS_INCONSISTENT;
-//    
-//                return LL_CORRUPTION;
-//            }
-//        } else {
-//            error_msg("Linked List in an inconsistent state");
-//            dbg_val(linked_list->current_pos, "%i");
-//            
-//            linked_list->current_pos = LL_STATUS_INCONSISTENT;
-//    
-//            return LL_CORRUPTION;
-//        }
-//    }
-//
-//    // rewire pointers and insert new node
-//    dbg_msg("Building new node");
-//    node.next_node = next_node;
-//
-//    dbg_msg("Rewiring previous node");
-//    prev_node->next_node = &node;
-//
-//    dbg_msg("Updating list size counter");
-//    linked_list->size++;
-//
-//    dbg_msg("Finished adding, now returning");
-//
-//    return LL_SUCCESS;
 }
 
 int linked_list_remove(
