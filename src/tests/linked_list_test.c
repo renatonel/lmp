@@ -13,13 +13,14 @@
 #define print_test(name, description) __no_op__
 #endif // TEST_OUTPUT
 
-#define PASS 1
-#define FAIL 0
+#define TEST_PASS 1
+#define TEST_FAIL 0
 
 typedef int test;
 typedef int bool;
 
 test test_linked_list_init() {
+
     print_test("test_linked_list_init",
            "To test that linked list initialization works");
 
@@ -49,29 +50,32 @@ test test_linked_list_init() {
         && first_node_check
         && current_node_check
         && last_node_check
-        ?  PASS 
-        :  FAIL;
+        ?  TEST_PASS 
+        :  TEST_FAIL;
 }
 
 test test_linked_list_add() {
+
     print_test("test_linked_list_add",
            "To test adding to a linked list");
 
     struct linked_list list;
     int content = 98;
 
+    // initialise the list
     if (linked_list_init(&list) != LL_SUCCESS) {
-        return FAIL;
+        return TEST_FAIL;
     }
 
+    // Test to add the first element
     bool add_first_check = 
         linked_list_add(&list, &content, 0) == LL_SUCCESS;
     
     bool size_1_check = list.size == 1;
     bool pos_1_check = list.current_pos == 0;
-    bool first_node_1_check = (int)(list.first_node->content) == 98;
-    bool curr_node_1_check = list.current_node->content == 98;
-    bool last_node_1_check = list.last_node->content == 98;
+    bool first_node_1_check = (*(int*)list.first_node->content) == 98;
+    bool curr_node_1_check = (*(int*)list.current_node->content) == 98;
+    bool last_node_1_check = (*(int*)list.last_node->content) == 98;
     //list->first_node == list->current_node == list->last_node;
 
     assert(add_first_check);
@@ -88,9 +92,12 @@ test test_linked_list_add() {
          && curr_node_1_check
          && last_node_1_check;
 
+    // Test to add the second element
+    
+
     return first_check
-        ?  PASS
-        :  FAIL;
+        ?  TEST_PASS
+        :  TEST_FAIL;
 }
 
 int main() {

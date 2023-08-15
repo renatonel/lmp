@@ -8,6 +8,7 @@
 // Return and Error codes
 #define LL_SUCCESS          0x0000
 #define LL_CORRUPTION       0x2001
+#define LL_INVALID_ARGS     0x2002
 #define LL_NOT_YET_IMPL     0x20FE
 #define LL_ERROR_UNKNOWN    0x20FF
 
@@ -66,23 +67,30 @@ int linked_list_remove(
         struct linked_list* linked_list, 
         int position);
 
-/** Moves the current node to the next.
+/** Returns the content of the current position.
+ *  
+ *  @returns the content of the current position.
+ **/
+void* linked_list_get(struct linked_list* linked_list);
+
+/** Moves the current position to the next node.
  *
  *  @returns the content of the new current node.
  **/
-void* linked_list_next_node(struct linked_list* linked_list);
+void* linked_list_next(struct linked_list* linked_list);
 
 /** Resets the current node to the first node.
  *
  **/
 int linked_list_reset(struct linked_list* linked_list);
 
+
+
+
 /* optional
 struct node* linked_list_current_node(struct linked_list* linked_list);
 
 int linked_list_size(struct linked_list* linked_list);
-
-int linked_list_current_pos(struct linked_list* linked_list);
 */
 
 /* potential extensions

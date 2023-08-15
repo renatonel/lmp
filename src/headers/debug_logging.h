@@ -23,5 +23,13 @@
 #define info_val(val, format)    __no_op__
 #endif
  
-#endif // __DEBUG_LOGGING_H__
+#ifdef LOG_ERROR
+#include <stdio.h>
+#define error_msg(string)         printf("ERROR: %s\n", string);
+#define error_val(val, format)    printf("ERROR: %s = "format"\n", #val, val);
+#else
+#define error_msg(string)         __no_op__
+#define error_val(val, format)    __no_op__
+#endif
 
+#endif // __DEBUG_LOGGING_H__
