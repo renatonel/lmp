@@ -42,7 +42,11 @@ out_dir: # Output directory structure
 tests: test_dir
 	#cp doc/myTestLiterateProgram.lmp bin/
 	#cd bin; ./lmp myTestLiterateProgram.lmp
-	$(CC) -o $(BUILD_DIR)/tests/$(EXECUTABLE)_test -I$(HEADER_DIR) $(TEST_DIR)/linked_list_test.c $(IMPL_DIR)/linked_list.c
+	$(CC) -g \
+		-o $(BUILD_DIR)/tests/$(EXECUTABLE)_test \
+		-I$(HEADER_DIR) \
+		$(TEST_DIR)/linked_list_test.c \
+		$(IMPL_DIR)/linked_list.c
 	$(BUILD_DIR)/tests/$(EXECUTABLE)_test
 
 test_dir: # location of test executables

@@ -29,6 +29,7 @@ int linked_list_add(
 
     dbg_msg("Creating new node to be added");
     static struct node node;
+    dbg_val(&node, "%lu");
     node.content = content;
 
     if (linked_list->current_node == NULL 
