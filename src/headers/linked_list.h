@@ -46,6 +46,7 @@ struct linked_list {
 };
 
 int linked_list_init(struct linked_list* linked_list);
+int linked_list_free(struct linked_list* linked_list);
 
 /** Add an element to the list.
  *  On success, the current node and position is set to the

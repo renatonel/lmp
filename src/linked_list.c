@@ -28,9 +28,9 @@ int linked_list_add(
     dbg_msg("== linked_list_add ==");
 
     dbg_msg("Creating new node to be added");
-    static struct node node;
-    dbg_val(&node, "%lu");
-    node.content = content;
+    struct node* node = malloc(sizeof(struct node));
+    dbg_val(node, "%lu");
+    node->content = content;
 
     if (linked_list->current_node == NULL 
             && linked_list->current_pos == LL_STATUS_EMPTY 
@@ -38,9 +38,9 @@ int linked_list_add(
     { 
         dbg_msg("List is currently empty, simply adding as only member");
 
-        linked_list->first_node = &node;
-        linked_list->last_node = &node;
-        linked_list->current_node = &node;
+        linked_list->first_node = node;
+        linked_list->last_node = node;
+        linked_list->current_node = node;
 
         linked_list->size = 1;
         linked_list->current_pos = 0;
@@ -50,8 +50,9 @@ int linked_list_add(
     } else if (position == 0) {
         dbg_msg("Adding at position 0, no need for resetting or rewiring");
 
-        linked_list->first_node = &node;
-        linked_list->current_node = &node;
+        node->next_node = linked_list->first_node;
+        linked_list->first_node = node;
+        linked_list->current_node = node;
 
         linked_list->size++;
         linked_list->current_pos = position;
@@ -78,8 +79,8 @@ int linked_list_add(
         linked_list_next(linked_list);
         next_node = linked_list->current_node;
 
-        node.next_node = next_node;
-        prev_node->next_node = &node;
+        node->next_node = next_node;
+        prev_node->next_node = node;
 
         linked_list->size++;
         linked_list->current_pos = position;
@@ -89,8 +90,8 @@ int linked_list_add(
     } else if (position > linked_list->size) {
         dbg_msg("Adding at end, so simply wire the last node up");
 
-        linked_list->last_node->next_node = &node;
-        linked_list->last_node = &node;
+        linked_list->last_node->next_node = node;
+        linked_list->last_node = node;
 
         linked_list->size++;
         linked_list->current_pos = linked_list->size - 1;
@@ -117,6 +118,9 @@ int linked_list_remove(
 void* linked_list_next(
         struct linked_list* linked_list) 
 {
+    dbg_msg("linked_list_next | current position:");
+    dbg_val(linked_list->current_pos, "%i");
+
     if (linked_list->current_node == NULL 
             && linked_list->current_pos == LL_STATUS_EMPTY 
             && linked_list->size == 0) 
@@ -125,9 +129,16 @@ void* linked_list_next(
         return NULL;
     }
     else if (linked_list->current_node != linked_list->last_node) {
+        dbg_msg("linked_list_next | not last node, so advancing position");
+        dbg_val(linked_list->current_node, "%lu");
+        dbg_val(linked_list->last_node, "%lu");
+
         linked_list->current_node = linked_list->current_node->next_node;
         linked_list->current_pos++;
     }
+
+    dbg_msg("linked_list_next | reached end of method");
+    dbg_val(linked_list->current_node, "%lu");
 
     return linked_list->current_node->content;
 }
