@@ -212,11 +212,131 @@ test test_linked_list_add_front() {
         :  TEST_FAIL;
 }
 
+test test_linked_list_add_back() {
+
+    print_test("test_linked_list_add_back",
+           "To test adding elements to end of linked list");
+
+    struct linked_list list;
+
+    int node1 =  1;
+    int node2 =  5;
+    int node3 = 10;
+
+    // initialise the list and add elements
+    if (linked_list_init(&list) != LL_SUCCESS) {
+        return TEST_FAIL;
+    }
+
+
+    // adding first node
+    bool add_node1_check        = linked_list_add(
+                                  &list, &node1, list.size)  == LL_SUCCESS;
+    bool node1_size_check       = list.size                           == 1;
+    bool node1_pos_check        = list.current_pos                    == 0;
+    bool node1_first_node_check = (*(int*)list.first_node->content)   == 1;
+    bool node1_curr_node_check  = (*(int*)list.current_node->content) == 1;
+    bool node1_last_node_check  = (*(int*)list.last_node->content)    == 1;
+
+    bool node1_check = add_node1_check
+        && node1_size_check
+        && node1_pos_check
+        && node1_first_node_check
+        && node1_curr_node_check
+        && node1_last_node_check;
+
+    assert(node1_check);
+
+
+    // adding second node to the back
+    bool add_node2_check        = linked_list_add(
+                                  &list, &node2, list.size)  == LL_SUCCESS;
+    bool node2_size_check       = list.size                           == 2;
+    bool node2_pos_check        = list.current_pos                    == 1;
+    bool node2_first_node_check = (*(int*)list.first_node->content)   == 1;
+    bool node2_curr_node_check  = (*(int*)list.current_node->content) == 5;
+    bool node2_last_node_check  = (*(int*)list.last_node->content)    == 5;
+
+    assert(add_node2_check);
+    assert(node2_size_check);
+    assert(node2_pos_check);
+    assert(node2_first_node_check);
+    assert(node2_curr_node_check);
+    assert(node2_last_node_check);
+
+    bool node2_check = add_node1_check
+        && node2_size_check
+        && node2_pos_check
+        && node2_first_node_check
+        && node2_curr_node_check
+        && node2_last_node_check;
+
+    assert(node2_check);
+
+    // adding third node to the back
+    bool add_node3_check        = linked_list_add(
+                                  &list, &node3, list.size)  == LL_SUCCESS;
+    bool node3_size_check       = list.size                           == 3;
+    bool node3_pos_check        = list.current_pos                    == 2;
+    bool node3_first_node_check = (*(int*)list.first_node->content)   == 1;
+    bool node3_curr_node_check  = (*(int*)list.current_node->content) == 10;
+    bool node3_last_node_check  = (*(int*)list.last_node->content)    == 10;
+
+    assert(add_node3_check);
+    assert(node3_size_check);
+    assert(node3_pos_check);
+    assert(node3_first_node_check);
+    assert(node3_curr_node_check);
+    assert(node3_last_node_check);
+
+    bool node3_check = add_node1_check
+        && node3_size_check
+        && node3_pos_check
+        && node3_first_node_check
+        && node3_curr_node_check
+        && node3_last_node_check;
+
+    assert(node3_check);
+
+
+    // checking that you cannot advance past the last element
+    linked_list_next(&list);
+    
+    bool node4_size_check       = list.size                           == 3;
+    bool node4_pos_check        = list.current_pos                    == 2;
+    bool node4_first_node_check = (*(int*)list.first_node->content)   == 1;
+    bool node4_curr_node_check  = (*(int*)list.current_node->content) == 10;
+    bool node4_last_node_check  = (*(int*)list.last_node->content)    == 10;
+
+    assert(node4_size_check);
+    assert(node4_pos_check);
+    assert(node4_first_node_check);
+    assert(node4_curr_node_check);
+    assert(node4_last_node_check);
+
+    bool node4_check = node4_size_check
+        && node4_pos_check
+        && node4_first_node_check
+        && node4_curr_node_check
+        && node4_last_node_check;
+
+    assert(node4_check);
+
+
+    return node1_check
+        && node2_check
+        && node3_check
+        && node4_check
+        ?  TEST_PASS
+        :  TEST_FAIL;
+}
+
 int main() {
     test (*tests[])() = {
          &test_linked_list_init
         ,&test_linked_list_add
         ,&test_linked_list_add_front
+        ,&test_linked_list_add_back
     };
 
     int test_count = sizeof(tests) / (8); // size of 64bit address ??

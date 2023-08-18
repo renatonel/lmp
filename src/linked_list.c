@@ -2,12 +2,13 @@
  *  Implementation for linked_list.h
  **/
 
-#define LOG_DEBUG
-#define LOG_ERROR
+//#define LOG_DEBUG
+//#define LOG_ERROR
 
 #include <debug_logging.h>
 #include <linked_list.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int linked_list_init(struct linked_list* linked_list) {
 
@@ -28,7 +29,7 @@ int linked_list_add(
     dbg_msg("== linked_list_add ==");
 
     dbg_msg("Creating new node to be added");
-    struct node* node = malloc(sizeof(struct node));
+    struct node* node = (struct node*)malloc(sizeof(struct node));
     dbg_val(node, "%lu");
     node->content = content;
 
@@ -59,7 +60,7 @@ int linked_list_add(
 
         return LL_SUCCESS;
 
-    } else if (position > 0 && position <= linked_list->size) {
+    } else if (position > 0 && position < linked_list->size) {
 
         struct node* prev_node; // node before the new node
                                 // to be rewired to newly added node
@@ -81,20 +82,22 @@ int linked_list_add(
 
         node->next_node = next_node;
         prev_node->next_node = node;
+        linked_list->current_node = node;
 
         linked_list->size++;
         linked_list->current_pos = position;
 
         return LL_SUCCESS;
 
-    } else if (position > linked_list->size) {
+    } else if (position >= linked_list->size) {
         dbg_msg("Adding at end, so simply wire the last node up");
 
         linked_list->last_node->next_node = node;
         linked_list->last_node = node;
+        linked_list->current_node = node;
 
+        linked_list->current_pos = linked_list->size;
         linked_list->size++;
-        linked_list->current_pos = linked_list->size - 1;
 
         return LL_SUCCESS;
 
