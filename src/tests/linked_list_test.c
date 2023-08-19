@@ -653,11 +653,16 @@ test test_linked_list_remove_only() {
     // test remove function
     bool remove_func_check = linked_list_remove(&list, 0) == LL_SUCCESS;
 
-    bool size_check       = list.size                   ==    0;
-    bool pos_check        = list.current_pos == LL_STATUS_EMPTY;
-    bool first_node_check = list.first_node->content    == NULL;
-    bool curr_node_check  = list.current_node->content  == NULL;
-    bool last_node_check  = list.last_node->content     == NULL;
+    bool size_check       = list.size == 0; 
+    assert(size_check);
+    bool pos_check        = list.current_pos == LL_STATUS_EMPTY; 
+    assert(pos_check);
+    bool first_node_check = list.first_node == NULL;
+    assert(first_node_check);
+    bool curr_node_check  = list.current_node == NULL;
+    assert(curr_node_check);
+    bool last_node_check  = list.last_node == NULL;
+    assert(last_node_check);
 
     bool remove_check = remove_func_check 
         && size_check
@@ -721,16 +726,10 @@ test test_linked_list_free() {
     // test free-up function
     linked_list_free(&list);
     bool size_check = list.size == 0;
-    bool pointer_check = pNode1 == NULL
-        && pNode2 == NULL
-        && pNode3 == NULL;
-
-    assert(pointer_check);
 
 
     return init_check 
         && pNode_check
-        && pointer_check
         ?  TEST_PASS 
         :  TEST_FAIL;
 }

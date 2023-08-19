@@ -23,7 +23,28 @@ int linked_list_init(struct linked_list* linked_list) {
 
 int linked_list_free(struct linked_list* linked_list) {
     
-    return 0;
+    int removed_count = 0;
+
+    if (linked_list->size < 1) {
+        return 0;
+    }
+
+    linked_list_reset(linked_list);
+    struct node* rem_node = linked_list->current_node;
+
+    for (int i = 0; i < linked_list->size; i++) {
+        linked_list_next(linked_list);
+        free(rem_node);
+        rem_node = linked_list->current_node;
+    }
+
+    linked_list->size = 0;
+    linked_list->current_pos = LL_STATUS_EMPTY;
+    linked_list->first_node = NULL;
+    linked_list->current_node = NULL;
+    linked_list->last_node = NULL;
+
+    return removed_count;
 }
 
 int linked_list_add(
@@ -120,7 +141,105 @@ int linked_list_remove(
         struct linked_list* linked_list, 
         int position) 
 {
-    return LL_NOT_YET_IMPL;
+    if (linked_list->current_node == NULL 
+            && linked_list->current_pos == LL_STATUS_EMPTY 
+            && linked_list->size == 0) 
+    { 
+        dbg_msg("List is currently empty, doing nothing");
+
+        return LL_SUCCESS;
+
+    } else if (linked_list->size == 1) {
+        dbg_msg("Removing the only element");
+
+        struct node* rem_node = linked_list->first_node;
+
+        linked_list->first_node = NULL;
+        linked_list->current_node = NULL;
+        linked_list->last_node = NULL;
+
+        free(rem_node);
+
+        linked_list->size = 0;
+        linked_list->current_pos = LL_STATUS_EMPTY;
+
+        return LL_SUCCESS;
+
+    } else if (position == 0) {
+        dbg_msg("Removing position 0");
+
+        struct node* rem_node = linked_list->first_node;
+
+        linked_list->first_node = linked_list->first_node->next_node;
+
+        free(rem_node);
+
+        linked_list->size--;
+
+        linked_list_reset(linked_list);
+
+        return LL_SUCCESS;
+
+    } else if (position > 0 && position < linked_list->size - 1) {
+
+        struct node* prev_node; // node before the removed node
+        struct node* rem_node;
+        struct node* next_node; // node after the removed node
+    
+        dbg_msg("Removing in middle somewhere");
+
+        linked_list_reset(linked_list);
+        for (int i = 0; i < position - 1; i++) {
+            // traverse the list untill position-1
+            linked_list_next(linked_list);
+        }
+
+        prev_node = linked_list->current_node;
+
+        linked_list_next(linked_list);
+        rem_node = linked_list->current_node;
+
+        linked_list_next(linked_list);
+        next_node = linked_list->current_node;
+
+        // rewire
+        prev_node->next_node = next_node;
+
+        free(rem_node);
+
+        linked_list->size--;
+
+        linked_list_reset(linked_list);
+
+        return LL_SUCCESS;
+
+    } else if (position >= linked_list->size - 1) {
+        dbg_msg("Removing last node");
+
+        linked_list_reset(linked_list);
+        for (int i = 0; i < linked_list->size - 2; i++) {
+            linked_list_next(linked_list);
+        }
+
+        free(linked_list->last_node);
+
+        linked_list->last_node = linked_list->current_node;
+        linked_list->last_node->next_node = NULL;
+
+        linked_list->size--;
+
+        linked_list_reset(linked_list);
+
+        return LL_SUCCESS;
+
+    } else {
+        error_msg("Could not determine which element to remove");
+        error_msg("Possible invalid position argument provided");
+        error_val(position, "%i");
+        error_val(linked_list->size, "%i");
+
+        return LL_INVALID_ARGS;
+    }
 }
 
 void* linked_list_next(
