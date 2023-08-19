@@ -45,7 +45,18 @@ struct linked_list {
     struct node* last_node;     ///< Pointer to the last node in the list.
 };
 
+
+/** Initializes the linked list.
+ *
+ **/
 int linked_list_init(struct linked_list* linked_list);
+
+/** Free memory taken up by linked list.
+ *  Frees the memory taken up by nodes within the list.
+ *
+ *  @linked_list list to be freed.
+ *  @return number of nodes freed.
+ **/
 int linked_list_free(struct linked_list* linked_list);
 
 /** Add an element to the list.

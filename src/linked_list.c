@@ -21,6 +21,11 @@ int linked_list_init(struct linked_list* linked_list) {
     return LL_SUCCESS;
 }
 
+int linked_list_free(struct linked_list* linked_list) {
+    
+    return 0;
+}
+
 int linked_list_add(
         struct linked_list* linked_list, 
         void* content, 
@@ -147,7 +152,8 @@ void* linked_list_next(
 }
 
 void* linked_list_get(struct linked_list* linked_list) {
-    return NULL;
+
+    return linked_list->current_node->content;
 }
 
 int linked_list_reset(struct linked_list* linked_list) {
