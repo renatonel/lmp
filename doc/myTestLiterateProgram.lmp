@@ -27,7 +27,7 @@ possible keys are:
   be assumed to be a file name, and the content of the code segment will
   be included in that file.
   Example: `file-extension: c h`
-  Any code segment like `--- main.c`, `--- main.h` or `--- abc.h` will
+  Any code segment like `+++ main.c`, `+++ main.h` or `+++ abc.h` will
   create file `main.c`, `main.h` and `abc.h` respectively.
 
 - tangle : the command used to "tangle", ie build, the program. The output
@@ -37,52 +37,52 @@ possible keys are:
 Now on to our example program source.
 Let's write a simple C program:
 
---- main.c
-#boilerplate
++++ main.c
+{{boilerplate}}
 
-#arithmetic function
+{{arithmetic function}}
 
-#program entry point
----
+{{program entry point}}
++++
 
 Let's first look at how we start our program, and how we want to use
 the arithmetic function:
 
---- program entry point
++++ program entry point
 int main() {
     printf("4 * 2 = %i\n", times_two(4));
 
     return 0;
 }
----
++++
 
 We are using `printf`, so let's remember to add `stdio` to our import list:
----imports
++++ imports
 #include <stdio.h>
----
++++
 
 So we want to times whatever we receive with 2:
 
---- arithmetic function
++++ arithmetic function
 int times_two(int nr) {
     return nr * 2;
 }
----
++++
 
 As for the boilerplate...
---- boilerplate
++++ boilerplate
 // Example program
 // Some license info...
 
-#imports
----
+{{imports}}
++++
 
-If we wanted to import more packages, we could use:
---- imports ++
+If we wanted to import more packages, we just add another section:
++++ imports
 // add some more imports as required...
----
-Note the `++` after the block name. It will add this block to the first
-block with the same name. If no previous block is found, is will treat
++++
+It will add this block to the first block with the same name. 
+If no previous block is found, is will treat
 this as the first block.
 
 
@@ -94,3 +94,6 @@ To just weave: `lmp --weave myTestLiterateProgram.lmp`
 To just tangle: `lmp --tangle myTestLiterateProgram.lmp`
 
 TODO: Add functionality to weave and tangle a document spread over many files.
+TODO: Also add functionality to run shell commands from within this file
+TODO: Also a method to include output of a program within this file (can
+      possibly be combined/included in the shell command capability)
