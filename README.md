@@ -1,3 +1,5 @@
+__WORK IN PROGRESS__
+
 # Literate My Program
 This is my go at a literate programming system.  
 
