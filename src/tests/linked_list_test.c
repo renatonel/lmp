@@ -754,6 +754,8 @@ int main() {
     int pass_count = 0;
     int test_nr = 0;
 
+    printf("\nLinked List tests\n");
+
 #ifdef TEST_OUTPUT
     printf("\n%i tests will be executed..\n", test_count);
 #endif // TEST_OUTPUT
