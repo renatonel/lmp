@@ -16,6 +16,9 @@
 #define LL_STATUS_EMPTY         -1      ///< list is empty
 #define LL_STATUS_INCONSISTENT  -99     ///< list is in inconsistent status
 
+/** The linked list content container
+ *
+ **/
 struct node {
     void* content;
     struct node* next_node;

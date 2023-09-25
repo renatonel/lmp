@@ -23,6 +23,7 @@ BUILD_DIR=build
 EXECUTABLE=lmp
 
 CC=clang
+DEBUG_OPTS=-g
 
 
 # Main executable(s)
@@ -32,6 +33,8 @@ lmp: src/main.c out_dir
 clean:
 	rm -Rf $(BUILD_DIR)
 
+doc: Doxyfile
+	doxygen ./Doxyfile
 
 # Dependencies
 out_dir: # Output directory structure
@@ -39,15 +42,28 @@ out_dir: # Output directory structure
 
 
 # Tests
-tests: test_dir
-	#cp doc/myTestLiterateProgram.lmp bin/
-	#cd bin; ./lmp myTestLiterateProgram.lmp
-	$(CC) -g \
-		-o $(BUILD_DIR)/tests/$(EXECUTABLE)_test \
+test_linked_list: test_dir
+	$(CC) $(DEBUG_OPTS) \
+		-o $(BUILD_DIR)/tests/linked_list_test \
 		-I$(HEADER_DIR) \
 		$(TEST_DIR)/linked_list_test.c \
 		$(IMPL_DIR)/linked_list.c
-	$(BUILD_DIR)/tests/$(EXECUTABLE)_test
+	
+	$(BUILD_DIR)/tests/linked_list_test
+
+test_keyvalue: test_dir
+	$(CC) $(DEBUG_OPTS) \
+		-o $(BUILD_DIR)/tests/keyvalue_test \
+		-I$(HEADER_DIR) \
+		$(TEST_DIR)/keyvalue_test.c \
+		$(IMPL_DIR)/keyvalue.c
+
+	$(BUILD_DIR)/tests/keyvalue_test
+
+
+tests: test_dir test_linked_list test_keyvalue
+
+
 
 test_dir: # location of test executables
 	mkdir -p $(BUILD_DIR)/tests
